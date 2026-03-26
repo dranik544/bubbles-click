@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://uncqy5kpooiv"]
+[gd_scene load_steps=23 format=3 uid="uid://uncqy5kpooiv"]
 
 [ext_resource type="Texture2D" uid="uid://b4ysg74k5vjj8" path="res://sprites/default/bg1.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://clvhtv6tlr5h8" path="res://scenes/main.gd" id="1_tbgi4"]
+[ext_resource type="Script" uid="uid://c6gr8yjifgnj8" path="res://scenes/bg.gd" id="3_jbj1t"]
 [ext_resource type="Script" uid="uid://bbsm4h1jlyf8o" path="res://scenes/bubblespawner.gd" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cysggygrs7a6t" path="res://scenes/bubble.tscn" id="5_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://c02fwkhos58ps" path="res://sprites/cursor1.png" id="6_jkv2x"]
@@ -50,16 +51,20 @@ scale_curve = SubResource("CurveTexture_tipki")
 [node name="main" type="Node2D"]
 script = ExtResource("1_tbgi4")
 
-[node name="ParallaxLayer" type="Parallax2D" parent="."]
-repeat_size = Vector2(512, 512)
-repeat_times = 32
-
-[node name="bg" type="Sprite2D" parent="ParallaxLayer"]
+[node name="bg" type="TextureRect" parent="."]
+z_index = -9
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_o5qli")
+stretch_mode = 1
+script = ExtResource("3_jbj1t")
 
 [node name="dust" type="GPUParticles2D" parent="."]
 position = Vector2(-32, 0)
-amount = 128
+amount = 512
 texture = SubResource("GradientTexture2D_tipki")
 lifetime = 128.0
 preprocess = 128.0
@@ -87,11 +92,6 @@ modulate = Color(1, 1, 1, 0.705882)
 position = Vector2(63, 70)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_jkv2x")
-
-[node name="bubble1" parent="bubblespawner" instance=ExtResource("5_a8y0u")]
-position = Vector2(338, 940)
-minSpeed = -0.02
-maxSpeed = -0.02
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -142,7 +142,7 @@ collision = NodePath("CollisionShape2D")
 shape = SubResource("RectangleShape2D_tipki")
 
 [node name="adtimer" type="Timer" parent="."]
-wait_time = 120.0
+wait_time = 180.0
 autostart = true
 ignore_time_scale = true
 script = ExtResource("10_choun")

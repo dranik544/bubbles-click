@@ -1,6 +1,8 @@
 extends Node2D
 
 func _ready() -> void:
+	if Global.disableAllYandexServices: return
+	
 	YandexSDK.init_game()
 	YandexSDK.game_ready()
 

@@ -1,40 +1,81 @@
 extends RigidBody2D
 
-enum type {default, rainbow}
+enum type {default, rainbow, gold, space, toxic}
 @export var currentType: type
-@export var enableAnimation: bool = true
+
+@export_category("Default")
 @export var sprite: Sprite2D
 @export var shadow: Sprite2D
 @export var button: Button
 @export var audio: AudioStreamPlayer2D
-@export var rainbowAudio: AudioStreamPlayer2D
 @export var light: PointLight2D
-@export var rainbow: GPUParticles2D
+@export var addscore: int = 1
 @export var minSpeed: float = -0.05
 @export var maxSpeed: float = -0.4
-@export var addscore: int = 1
+
+@export_category("Rainbow type")
+@export var rainbowAudio: AudioStreamPlayer2D
+@export var rainbowParticles: GPUParticles2D
+@export_category("Gold type")
+@export var goldAudio: AudioStreamPlayer2D
+@export var goldParticles: GPUParticles2D
+@export_category("Space type")
+@export var spaceAudio: AudioStreamPlayer2D
+@export var spaceParticles: GPUParticles2D
+@export_category("Toxic type")
+@export var toxicAudio: AudioStreamPlayer2D
+@export var toxicParticles: GPUParticles2D
+@export var toxicParticles2: GPUParticles2D
+@export var toxicLight: PointLight2D
+
 var nowBubbleDestroying: bool = false
 var spriteDefaultScale: Vector2 = Vector2.ZERO
 var time: float = 0.0
 
 
 func _ready() -> void:
-	spriteDefaultScale = sprite.scale
 	button.pressed.connect(buttonpressed)
 	gravity_scale = randf_range(minSpeed, maxSpeed)
-	scale += Vector2(-0.3, 0.3)
+	spriteDefaultScale = sprite.scale
 	
 	match currentType:
 		type.default:
 			pass
 		type.rainbow:
 			if Global.enableAnimation:
-				rainbow.visible = true
-				rainbow.emitting = true
+				rainbowParticles.visible = true
+				rainbowParticles.emitting = true
 			sprite.texture = load("res://sprites/default/bubble2.png")
 			shadow.texture = load("res://sprites/default/bubble2.png")
 			rainbowAudio.play()
-			addscore = 25
+			addscore = 10
+		type.gold:
+			if Global.enableAnimation:
+				goldParticles.visible = true
+				goldParticles.emitting = true
+			sprite.texture = load("res://sprites/default/bubble3.png")
+			shadow.texture = load("res://sprites/default/bubble3.png")
+			goldAudio.play()
+			addscore = 50
+		type.space:
+			if Global.enableAnimation:
+				spaceParticles.visible = true
+				spaceParticles.emitting = true
+			sprite.texture = load("res://sprites/default/bubble4.png")
+			shadow.texture = load("res://sprites/default/bubble4.png")
+			spaceAudio.play()
+			addscore = 100
+		type.toxic:
+			if Global.enableAnimation:
+				toxicParticles.visible = true
+				toxicParticles.emitting = true
+				toxicParticles2.visible = true
+				toxicParticles2.emitting = true
+			toxicLight.visible = true
+			sprite.texture = load("res://sprites/default/bubble5.png")
+			shadow.texture = load("res://sprites/default/bubble5.png")
+			toxicAudio.play()
+			addscore = -25
 
 func _process(delta: float) -> void:
 	if Global.enableAnimation and !nowBubbleDestroying:
@@ -47,8 +88,8 @@ func _process(delta: float) -> void:
 			sin(time * 2) * 0.06,
 			sin(time) * 0.06
 		)
-		sprite.skew = 0.0 + sin(time * 2) * 0.02
-		shadow.skew = 0.0 + sin(time * 2) * 0.02
+		#sprite.skew = 0.0 + sin(time * 2) * 0.02
+		#shadow.skew = 0.0 + sin(time * 2) * 0.02
 
 func buttonpressed():
 	destroy()
@@ -58,6 +99,13 @@ func destroy():
 	
 	Global.score += addscore
 	Global.updatescore.emit()
+	if get_node("addedscore") != null:
+		match currentType:
+			type.default: get_node("addedscore").showscore(addscore, Color.WHITE)
+			type.rainbow: get_node("addedscore").showscore(addscore, Color.HOT_PINK)
+			type.gold: get_node("addedscore").showscore(addscore, Color.GOLD)
+			type.space: get_node("addedscore").showscore(addscore, Color.REBECCA_PURPLE)
+			type.toxic: get_node("addedscore").showscore(addscore, Color.DARK_GREEN)
 	
 	if Global.enableAnimation:
 		nowBubbleDestroying = true

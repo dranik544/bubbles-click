@@ -13,6 +13,8 @@ config_version=5
 config/name="bubbles click"
 run/main_scene="uid://dr2h16in47f06"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/fullsize=false
+boot_splash/image="uid://bvkmpceob2s1t"
 config/icon="res://icon.svg"
 
 [autoload]
@@ -22,8 +24,10 @@ Global="*res://global.gd"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
+window/size/viewport_width=480
+window/size/viewport_height=920
+window/handheld/orientation=1
+mouse_cursor/custom_image="uid://dt8rls8yr017o"
 
 [editor_plugins]
 
@@ -45,3 +49,5 @@ pointing/android/enable_long_press_as_right_click=true
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+textures/webp_compression/compression_method=4

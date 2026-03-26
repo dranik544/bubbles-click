@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0x0anm201xf7"
-path.s3tc="res://.godot/imported/settings1.png-41f42eef617980ce960848ecd252ec36.s3tc.ctex"
-path.etc2="res://.godot/imported/settings1.png-41f42eef617980ce960848ecd252ec36.etc2.ctex"
+uid="uid://p02jcegkhpnu"
+path.s3tc="res://.godot/imported/bubble3.png-0f125fa057a76c3d6bf3e0fabb696dfb.s3tc.ctex"
+path.etc2="res://.godot/imported/bubble3.png-0f125fa057a76c3d6bf3e0fabb696dfb.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://sprites/settings1.png"
-dest_files=["res://.godot/imported/settings1.png-41f42eef617980ce960848ecd252ec36.s3tc.ctex", "res://.godot/imported/settings1.png-41f42eef617980ce960848ecd252ec36.etc2.ctex"]
+source_file="res://sprites/default/bubble3.png"
+dest_files=["res://.godot/imported/bubble3.png-0f125fa057a76c3d6bf3e0fabb696dfb.s3tc.ctex", "res://.godot/imported/bubble3.png-0f125fa057a76c3d6bf3e0fabb696dfb.etc2.ctex"]
 
 [params]
 
