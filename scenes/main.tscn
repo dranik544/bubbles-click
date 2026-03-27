@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://uncqy5kpooiv"]
+[gd_scene load_steps=25 format=3 uid="uid://uncqy5kpooiv"]
 
 [ext_resource type="Texture2D" uid="uid://b4ysg74k5vjj8" path="res://sprites/default/bg1.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://clvhtv6tlr5h8" path="res://scenes/main.gd" id="1_tbgi4"]
@@ -16,6 +16,8 @@
 [ext_resource type="Script" uid="uid://bjhodcgqywbqv" path="res://scenes/adtimer.gd" id="10_choun"]
 [ext_resource type="AudioStream" uid="uid://dq7as3w5dajno" path="res://audio/music1.mp3" id="10_eb6dy"]
 [ext_resource type="Script" uid="uid://ds24il5cqeybp" path="res://scenes/music.gd" id="10_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://dnfqgvliyug7d" path="res://sprites/wallpapericon1.png" id="13_muem4"]
+[ext_resource type="Script" uid="uid://b5hafagiccmye" path="res://scenes/wallpaperbutton.gd" id="14_dp3eg"]
 
 [sub_resource type="Gradient" id="Gradient_o6xl0"]
 offsets = PackedFloat32Array(0, 0.473684, 1)
@@ -56,6 +58,10 @@ z_index = -9
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_o5qli")
@@ -88,7 +94,6 @@ minSpeed = -0.02
 maxSpeed = -0.02
 
 [node name="Sprite2D" type="Sprite2D" parent="bubblespawner/bubble"]
-modulate = Color(1, 1, 1, 0.705882)
 position = Vector2(63, 70)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_jkv2x")
@@ -125,13 +130,23 @@ script = ExtResource("9_a8y0u")
 
 [node name="soundbutton" type="Button" parent="CanvasLayer"]
 offset_left = 10.0
-offset_top = 96.0
+offset_top = 92.0
 offset_right = 82.0
-offset_bottom = 168.0
+offset_bottom = 164.0
 icon = ExtResource("9_trceg")
 flat = true
 script = ExtResource("9_a8y0u")
 currentType = 1
+
+[node name="wallpaperbutton" type="Button" parent="CanvasLayer" node_paths=PackedStringArray("bg")]
+offset_left = 10.0
+offset_top = 174.0
+offset_right = 82.0
+offset_bottom = 246.0
+icon = ExtResource("13_muem4")
+flat = true
+script = ExtResource("14_dp3eg")
+bg = NodePath("../../bg")
 
 [node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("collision")]
 position = Vector2(0, -256)

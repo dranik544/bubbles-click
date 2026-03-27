@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cysggygrs7a6t"]
+[gd_scene load_steps=31 format=3 uid="uid://cysggygrs7a6t"]
 
 [ext_resource type="Texture2D" uid="uid://bvkmpceob2s1t" path="res://sprites/default/bubble1.png" id="1_2vdav"]
 [ext_resource type="Script" uid="uid://chs4tva2c030l" path="res://scenes/bubble.gd" id="1_pm753"]
@@ -7,19 +7,26 @@
 [ext_resource type="AudioStream" uid="uid://boqgpr2mum4i3" path="res://audio/bubble3.mp3" id="5_6jlkr"]
 [ext_resource type="AudioStream" uid="uid://bg4f4dcibhysc" path="res://audio/bubble4.mp3" id="6_wcqnj"]
 [ext_resource type="Texture2D" uid="uid://ccpnxpvxgehps" path="res://sprites/default/bubble2.png" id="7_8ycye"]
-[ext_resource type="AudioStream" uid="uid://ienm5vbljwoh" path="res://audio/rainbowbubble1.mp3" id="8_6jlkr"]
 [ext_resource type="Script" uid="uid://bdeq67xt8j3fn" path="res://scenes/audio.gd" id="9_wcqnj"]
 [ext_resource type="Texture2D" uid="uid://blryinm03qrxi" path="res://sprites/default/bubbleparticle1.png" id="10_tpimy"]
-[ext_resource type="AudioStream" uid="uid://craw1tco4xucr" path="res://audio/gold1.mp3" id="11_rd4oa"]
 [ext_resource type="FontFile" uid="uid://dl1bc6hwq5v7i" path="res://fonts/ofont.ru_Shonen.ttf" id="12_qoqsh"]
 [ext_resource type="Script" uid="uid://dmlirqf6i40td" path="res://scenes/addedscore.gd" id="13_v0ipn"]
-[ext_resource type="AudioStream" uid="uid://dv73vl26nem4p" path="res://audio/space1.mp3" id="14_h4d70"]
+[ext_resource type="Texture2D" uid="uid://bilj4if8ulogu" path="res://sprites/default/explosion.png" id="14_h4d70"]
 [ext_resource type="Texture2D" uid="uid://cugptyug4mqgd" path="res://sprites/default/bubbleparticle2.png" id="15_0sqxc"]
 [ext_resource type="Texture2D" uid="uid://68cw4vdcrokr" path="res://sprites/default/bubbledestroy2.png" id="16_ejcp0"]
-[ext_resource type="AudioStream" uid="uid://cdj7tbwnsbmm8" path="res://audio/toxic1.mp3" id="16_u6d7x"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ax11v"]
 bounce = 0.5
+
+[sub_resource type="Gradient" id="Gradient_v0ipn"]
+offsets = PackedFloat32Array(0, 0.605263)
+colors = PackedColorArray(1, 1, 1, 0.294118, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h4d70"]
+gradient = SubResource("Gradient_v0ipn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+repeat = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pm753"]
 radius = 60.0
@@ -50,15 +57,6 @@ stream_0/stream = ExtResource("3_ax11v")
 stream_1/stream = ExtResource("4_8ycye")
 stream_2/stream = ExtResource("5_6jlkr")
 stream_3/stream = ExtResource("6_wcqnj")
-
-[sub_resource type="Gradient" id="Gradient_wcqnj"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_8ycye"]
-gradient = SubResource("Gradient_wcqnj")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
 
 [sub_resource type="Curve" id="Curve_6jlkr"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -123,26 +121,35 @@ scale_max = 0.2
 color = Color(1, 1, 1, 0.686275)
 alpha_curve = SubResource("CurveTexture_wcqnj")
 
-[node name="bubble" type="RigidBody2D" node_paths=PackedStringArray("sprite", "shadow", "button", "audio", "light", "rainbowAudio", "rainbowParticles", "goldAudio", "goldParticles", "spaceAudio", "spaceParticles", "toxicAudio", "toxicParticles", "toxicParticles2", "toxicLight")]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ejcp0"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 64.0
+angle_min = -180.0
+angle_max = 180.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.2
+color = Color(1, 1, 1, 0.686275)
+alpha_curve = SubResource("CurveTexture_wcqnj")
+
+[node name="bubble" type="RigidBody2D" node_paths=PackedStringArray("collision", "sprite", "shadow", "light", "button", "audio", "rainbowParticles", "goldParticles", "spaceParticles", "toxicParticles", "toxicParticles2", "bombParticles")]
 mass = 0.002
 physics_material_override = SubResource("PhysicsMaterial_ax11v")
 gravity_scale = -0.2
 script = ExtResource("1_pm753")
+collision = NodePath("CollisionShape2D")
 sprite = NodePath("sprite")
 shadow = NodePath("shadow")
+light = NodePath("light")
 button = NodePath("Button")
 audio = NodePath("audio")
-light = NodePath("light")
-rainbowAudio = NodePath("rainbow/audio")
 rainbowParticles = NodePath("rainbow/particles")
-goldAudio = NodePath("gold/audio")
 goldParticles = NodePath("gold/particles")
-spaceAudio = NodePath("space/audio")
 spaceParticles = NodePath("space/particles")
-toxicAudio = NodePath("toxic/audio")
 toxicParticles = NodePath("toxic/particles")
 toxicParticles2 = NodePath("toxic/particles2")
-toxicLight = NodePath("toxic/light")
+bombParticles = NodePath("bomb/particles")
 
 [node name="addedscore" type="Label" parent="."]
 visible = false
@@ -174,6 +181,10 @@ position = Vector2(-16, 16)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_2vdav")
 
+[node name="light" type="Sprite2D" parent="."]
+scale = Vector2(5, 5)
+texture = SubResource("GradientTexture2D_h4d70")
+
 [node name="sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_2vdav")
@@ -199,15 +210,11 @@ offset_top = -64.0
 offset_right = 64.0
 offset_bottom = 64.0
 pivot_offset = Vector2(64, 64)
+mouse_filter = 1
 
 [node name="audio" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_tpimy")
 script = ExtResource("9_wcqnj")
-
-[node name="light" type="PointLight2D" parent="."]
-color = Color(0.686275, 0.984314, 0.996078, 0.294118)
-texture = SubResource("GradientTexture2D_8ycye")
-texture_scale = 10.0
 
 [node name="rainbow" type="Node2D" parent="."]
 
@@ -221,10 +228,6 @@ lifetime = 4.0
 fixed_fps = 15
 process_material = SubResource("ParticleProcessMaterial_tpimy")
 
-[node name="audio" type="AudioStreamPlayer2D" parent="rainbow"]
-stream = ExtResource("8_6jlkr")
-script = ExtResource("9_wcqnj")
-
 [node name="gold" type="Node2D" parent="."]
 
 [node name="particles" type="GPUParticles2D" parent="gold"]
@@ -237,25 +240,18 @@ lifetime = 4.0
 fixed_fps = 15
 process_material = SubResource("ParticleProcessMaterial_rd4oa")
 
-[node name="audio" type="AudioStreamPlayer2D" parent="gold"]
-stream = ExtResource("11_rd4oa")
-script = ExtResource("9_wcqnj")
-
 [node name="space" type="Node2D" parent="."]
 
 [node name="particles" type="GPUParticles2D" parent="space"]
 visible = false
 modulate = Color(0.763142, 0.65975, 1, 1)
 z_index = -1
+emitting = false
 amount = 256
 texture = ExtResource("10_tpimy")
 lifetime = 4.0
 fixed_fps = 15
 process_material = SubResource("ParticleProcessMaterial_0sqxc")
-
-[node name="audio" type="AudioStreamPlayer2D" parent="space"]
-stream = ExtResource("14_h4d70")
-script = ExtResource("9_wcqnj")
 
 [node name="toxic" type="Node2D" parent="."]
 
@@ -269,10 +265,6 @@ lifetime = 4.0
 fixed_fps = 15
 process_material = SubResource("ParticleProcessMaterial_v0ipn")
 
-[node name="audio" type="AudioStreamPlayer2D" parent="toxic"]
-stream = ExtResource("16_u6d7x")
-script = ExtResource("9_wcqnj")
-
 [node name="particles2" type="GPUParticles2D" parent="toxic"]
 visible = false
 modulate = Color(0, 1, 0, 1)
@@ -284,8 +276,14 @@ lifetime = 4.0
 fixed_fps = 15
 process_material = SubResource("ParticleProcessMaterial_u6d7x")
 
-[node name="light" type="PointLight2D" parent="toxic"]
+[node name="bomb" type="Node2D" parent="."]
+
+[node name="particles" type="GPUParticles2D" parent="bomb"]
 visible = false
-color = Color(0.0352941, 0.372549, 0, 0.686275)
-texture = SubResource("GradientTexture2D_8ycye")
-texture_scale = 5.0
+z_index = -1
+emitting = false
+amount = 64
+texture = ExtResource("14_h4d70")
+lifetime = 2.0
+fixed_fps = 15
+process_material = SubResource("ParticleProcessMaterial_ejcp0")

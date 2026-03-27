@@ -5,7 +5,9 @@ extends Node2D
 @export var bubble1: PackedScene = preload("res://scenes/bubble.tscn")
 @export var minTime: float = 1.0
 @export var maxTime: float = 3.0
-@export var chance: int = 100
+@export var chance: int = 200
+
+@export var spawnInPoint: bool = false
 
 
 func _ready() -> void:
@@ -16,7 +18,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	
-	if screensize == Vector2.ZERO: screensize = get_viewport().size
+	if !spawnInPoint:
+		if screensize == Vector2.ZERO: screensize = get_viewport().size
 	spawntimer.wait_time = randf_range(minTime, maxTime)
 	spawntimer.timeout.connect(timeout)
 
@@ -24,10 +27,15 @@ func timeout():
 	if bubble1 == null: return
 	
 	var newbubble: RigidBody2D = bubble1.instantiate()
-	newbubble.global_position = Vector2(
-		randf_range(128.0, screensize.x - 128.0),
-		screensize.y + 128.0
-	)
+	
+	if spawnInPoint:
+		newbubble.global_position = global_position + Vector2(randf_range(-25, 25), randf_range(-25, 25))
+	else:
+		newbubble.global_position = Vector2(
+			randf_range(128.0, screensize.x - 128.0),
+			screensize.y + 128.0
+		)
+	
 	var bubbletype = randi() % chance
 	match bubbletype:
 		1,2,3,4,5,6,7,8,9,10: newbubble.currentType = newbubble.type.rainbow
@@ -47,8 +55,10 @@ func timeout():
 				add_child(morebubble)
 			return
 		
+		38,39,40,41,42,43,44,45,46: newbubble.currentType = newbubble.type.bomb
+		
 		_: newbubble.currentType = newbubble.type.default
 	
-	add_child(newbubble)
+	get_tree().current_scene.add_child(newbubble)
 	
 	spawntimer.wait_time = randf_range(minTime, maxTime)

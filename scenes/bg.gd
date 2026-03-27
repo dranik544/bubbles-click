@@ -11,3 +11,5 @@ func _ready() -> void:
 	
 	size = get_viewport().size
 	position = Vector2.ZERO
+	
+	texture = load("res://sprites/default/bg1.png")

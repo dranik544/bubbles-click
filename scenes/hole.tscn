@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://7hlrq35os3fa"]
+
+[ext_resource type="Script" uid="uid://dk811q0v5wu52" path="res://scenes/hole.gd" id="1_iyxdx"]
+[ext_resource type="Script" uid="uid://bbsm4h1jlyf8o" path="res://scenes/bubblespawner.gd" id="1_lerre"]
+[ext_resource type="Texture2D" uid="uid://bxtai6po55fu" path="res://sprites/default/hole1.png" id="2_a2ebe"]
+[ext_resource type="Texture2D" uid="uid://bilj4if8ulogu" path="res://sprites/default/explosion.png" id="4_spnof"]
+[ext_resource type="Script" uid="uid://bdeq67xt8j3fn" path="res://scenes/audio.gd" id="5_1advb"]
+[ext_resource type="AudioStream" uid="uid://dkhvmxc6c1tb2" path="res://audio/bomb1.mp3" id="5_j65mp"]
+
+[sub_resource type="Curve" id="Curve_1advb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j65mp"]
+curve = SubResource("Curve_1advb")
+
+[sub_resource type="Curve" id="Curve_l47fx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_45un5"]
+curve = SubResource("Curve_l47fx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7mnko"]
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 192.0
+angle_min = -180.0
+angle_max = 180.0
+gravity = Vector3(0, -19.6, 0)
+scale_min = 1.5
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_45un5")
+alpha_curve = SubResource("CurveTexture_j65mp")
+
+[node name="hole" type="Node2D" node_paths=PackedStringArray("bubblespawner", "sprite", "timer", "explosion")]
+z_index = -1
+script = ExtResource("1_iyxdx")
+bubblespawner = NodePath("bubblespawner")
+sprite = NodePath("Sprite2D")
+timer = NodePath("Timer")
+explosion = NodePath("explosion")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_a2ebe")
+
+[node name="bubblespawner" type="Node2D" parent="." node_paths=PackedStringArray("spawntimer")]
+script = ExtResource("1_lerre")
+screensize = Vector2(80, 80)
+spawntimer = NodePath("spawntimer")
+minTime = 5.0
+maxTime = 8.0
+chance = 100
+spawnInPoint = true
+
+[node name="spawntimer" type="Timer" parent="bubblespawner"]
+wait_time = 2.5
+autostart = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
+[node name="explosion" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+texture = ExtResource("4_spnof")
+lifetime = 2.0
+one_shot = true
+speed_scale = 1.5
+explosiveness = 1.0
+fixed_fps = 15
+process_material = SubResource("ParticleProcessMaterial_7mnko")
+
+[node name="audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_j65mp")
+autoplay = true
+script = ExtResource("5_1advb")

@@ -22,8 +22,4 @@ func _ready() -> void:
 						icon = load("res://sprites/soundicon1.png")
 					else:
 						icon = load("res://sprites/soundicon2.png")
-			
-			print(Global.enableMusic)
-			print(Global.enableSound)
-			print("-  -  -")
 	)
