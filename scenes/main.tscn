@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://uncqy5kpooiv"]
+[gd_scene load_steps=31 format=3 uid="uid://uncqy5kpooiv"]
 
 [ext_resource type="Texture2D" uid="uid://b4ysg74k5vjj8" path="res://sprites/default/bg1.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://clvhtv6tlr5h8" path="res://scenes/main.gd" id="1_tbgi4"]
@@ -11,13 +11,19 @@
 [ext_resource type="Script" uid="uid://km63dl7e4vvu" path="res://scenes/area_2d.gd" id="7_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://c1nyolro5g0yw" path="res://sprites/musicicon1.png" id="8_eb6dy"]
 [ext_resource type="Script" uid="uid://nqy4otx4167r" path="res://scenes/dust.gd" id="8_tipki"]
+[ext_resource type="Script" uid="uid://cgup4f1ewxak" path="res://scenes/levelbar.gd" id="9_0ld40"]
 [ext_resource type="Script" uid="uid://docx471cr5k1r" path="res://scenes/audiobutton.gd" id="9_a8y0u"]
 [ext_resource type="Texture2D" uid="uid://c472p8fktahai" path="res://sprites/soundicon1.png" id="9_trceg"]
-[ext_resource type="Script" uid="uid://bjhodcgqywbqv" path="res://scenes/adtimer.gd" id="10_choun"]
 [ext_resource type="AudioStream" uid="uid://dq7as3w5dajno" path="res://audio/music1.mp3" id="10_eb6dy"]
 [ext_resource type="Script" uid="uid://ds24il5cqeybp" path="res://scenes/music.gd" id="10_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://dnfqgvliyug7d" path="res://sprites/wallpapericon1.png" id="13_muem4"]
 [ext_resource type="Script" uid="uid://b5hafagiccmye" path="res://scenes/wallpaperbutton.gd" id="14_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://dvs1oxoo3lg7t" path="res://sprites/upgrades/upgrade1.png" id="16_gqmmt"]
+[ext_resource type="Script" uid="uid://byk5pdu0desh6" path="res://scenes/upgradeselect.gd" id="16_y6deb"]
+[ext_resource type="Script" uid="uid://dqr3mlq6ols51" path="res://scenes/upgradebutton.gd" id="17_jscy8"]
+[ext_resource type="Texture2D" uid="uid://bwrgx3tqhtmot" path="res://sprites/upgrades/upgrade2.png" id="17_yc10j"]
+[ext_resource type="Texture2D" uid="uid://rqit8pq5xee4" path="res://sprites/upgrades/upgrade3.png" id="18_pm3ni"]
+[ext_resource type="Script" uid="uid://bqqfl22n3l551" path="res://scenes/adwarning.gd" id="21_og1vs"]
 
 [sub_resource type="Gradient" id="Gradient_o6xl0"]
 offsets = PackedFloat32Array(0, 0.473684, 1)
@@ -78,6 +84,7 @@ process_material = SubResource("ParticleProcessMaterial_o6xl0")
 script = ExtResource("8_tipki")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -1)
 anchor_mode = 0
 
 [node name="bubblespawner" type="Node2D" parent="." node_paths=PackedStringArray("spawntimer")]
@@ -100,14 +107,48 @@ texture = ExtResource("6_jkv2x")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="levelbar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(0, 32)
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 37.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_tefeu")
+show_percentage = false
+script = ExtResource("9_0ld40")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="CanvasLayer/levelbar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("6_tefeu")
+text = "0 LVL"
+vertical_alignment = 1
+
 [node name="counter" type="Label" parent="CanvasLayer"]
 custom_minimum_size = Vector2(128, 80)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -121.5
+offset_top = 35.0
 offset_right = 121.5
-offset_bottom = 80.0
+offset_bottom = 115.0
 grow_horizontal = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = -4
@@ -121,18 +162,18 @@ script = ExtResource("6_o6xl0")
 
 [node name="musicbutton" type="Button" parent="CanvasLayer"]
 offset_left = 10.0
-offset_top = 10.0
+offset_top = 42.0
 offset_right = 82.0
-offset_bottom = 82.0
+offset_bottom = 114.0
 icon = ExtResource("8_eb6dy")
 flat = true
 script = ExtResource("9_a8y0u")
 
 [node name="soundbutton" type="Button" parent="CanvasLayer"]
 offset_left = 10.0
-offset_top = 92.0
+offset_top = 124.0
 offset_right = 82.0
-offset_bottom = 164.0
+offset_bottom = 196.0
 icon = ExtResource("9_trceg")
 flat = true
 script = ExtResource("9_a8y0u")
@@ -140,13 +181,150 @@ currentType = 1
 
 [node name="wallpaperbutton" type="Button" parent="CanvasLayer" node_paths=PackedStringArray("bg")]
 offset_left = 10.0
-offset_top = 174.0
+offset_top = 206.0
 offset_right = 82.0
-offset_bottom = 246.0
+offset_bottom = 278.0
 icon = ExtResource("13_muem4")
 flat = true
 script = ExtResource("14_dp3eg")
 bg = NodePath("../../bg")
+
+[node name="upgradeselect" type="Control" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_y6deb")
+
+[node name="bg" type="ColorRect" parent="CanvasLayer/upgradeselect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+
+[node name="vbox" type="VBoxContainer" parent="CanvasLayer/upgradeselect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="button1" type="Button" parent="CanvasLayer/upgradeselect/vbox" node_paths=PackedStringArray("upgradeSelectNode")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 24
+text = "Ускорить появление новых пузырей"
+icon = ExtResource("16_gqmmt")
+autowrap_mode = 3
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("17_jscy8")
+upgradeSelectNode = NodePath("../..")
+
+[node name="button2" type="Button" parent="CanvasLayer/upgradeselect/vbox" node_paths=PackedStringArray("upgradeSelectNode")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 24
+text = "Увеличить доход с пузырей"
+icon = ExtResource("18_pm3ni")
+autowrap_mode = 3
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("17_jscy8")
+currentUpgrade = 1
+upgradeSelectNode = NodePath("../..")
+
+[node name="button3" type="Button" parent="CanvasLayer/upgradeselect/vbox" node_paths=PackedStringArray("upgradeSelectNode")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 24
+text = "Уменьшить шанс появления ядовитых пузырей"
+icon = ExtResource("17_yc10j")
+autowrap_mode = 3
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("17_jscy8")
+currentUpgrade = 2
+upgradeSelectNode = NodePath("../..")
+
+[node name="skipbutton" type="Button" parent="CanvasLayer/upgradeselect/vbox" node_paths=PackedStringArray("upgradeSelectNode")]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(1, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 24
+text = "Пропустить"
+autowrap_mode = 3
+script = ExtResource("17_jscy8")
+isSkipButton = true
+upgradeSelectNode = NodePath("../..")
+
+[node name="adwarning" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("timer")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("21_og1vs")
+timer = NodePath("adtimer")
+
+[node name="bg" type="ColorRect" parent="CanvasLayer/adwarning"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.686275)
+
+[node name="Label" type="Label" parent="CanvasLayer/adwarning"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 48
+text = "Сейчас появится реклама..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="adtimer" type="Timer" parent="CanvasLayer/adwarning"]
+wait_time = 8.0
+autostart = true
+ignore_time_scale = true
 
 [node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("collision")]
 position = Vector2(0, -256)
@@ -155,12 +333,6 @@ collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_tipki")
-
-[node name="adtimer" type="Timer" parent="."]
-wait_time = 180.0
-autostart = true
-ignore_time_scale = true
-script = ExtResource("10_choun")
 
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_eb6dy")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dr2h16in47f06"]
+[gd_scene load_steps=7 format=3 uid="uid://dr2h16in47f06"]
 
 [ext_resource type="Script" uid="uid://38tg54l1e8hf" path="res://start.gd" id="1_ots34"]
 [ext_resource type="Texture2D" uid="uid://b4ysg74k5vjj8" path="res://sprites/default/bg1.png" id="2_qn1rc"]
 [ext_resource type="FontFile" uid="uid://dl1bc6hwq5v7i" path="res://fonts/ofont.ru_Shonen.ttf" id="3_1n0d2"]
 [ext_resource type="Texture2D" uid="uid://c02fwkhos58ps" path="res://sprites/cursor1.png" id="4_y5hus"]
 [ext_resource type="Texture2D" uid="uid://dnfqgvliyug7d" path="res://sprites/wallpapericon1.png" id="5_oiuna"]
+[ext_resource type="Texture2D" uid="uid://cugptyug4mqgd" path="res://sprites/default/bubbleparticle2.png" id="6_4a3qj"]
 
 [node name="start" type="Node2D"]
 script = ExtResource("1_ots34")
@@ -64,6 +65,27 @@ theme_override_font_sizes/font_size = 18
 button_mask = 7
 text = "Выключить анимации и детали (для слабых устройств)"
 icon = ExtResource("5_oiuna")
+alignment = 1
+autowrap_mode = 2
+expand_icon = true
+
+[node name="CheckButton2" type="CheckButton" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_1n0d2")
+theme_override_font_sizes/font_size = 18
+button_pressed = true
+button_mask = 7
+text = "Отключить АвтоПаузу, если игра не активна"
+icon = ExtResource("6_4a3qj")
 alignment = 1
 autowrap_mode = 2
 expand_icon = true

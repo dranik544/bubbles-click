@@ -101,15 +101,15 @@ func buttonpressed():
 func destroy():
 	if nowBubbleDestroying: return
 	
-	Global.score += addscore
-	Global.updatescore.emit()
+	Global.addscore(addscore)
+	
 	if get_node("addedscore") != null:
 		match currentType:
-			type.default: get_node("addedscore").showscore(addscore, Color.WHITE)
-			type.rainbow: get_node("addedscore").showscore(addscore, Color.HOT_PINK)
-			type.gold: get_node("addedscore").showscore(addscore, Color.GOLD)
-			type.space: get_node("addedscore").showscore(addscore, Color.REBECCA_PURPLE)
-			type.toxic: get_node("addedscore").showscore(addscore, Color.DARK_GREEN)
+			type.default: get_node("addedscore").showscore(addscore * Global.addScoreMultiplier, Color.WHITE)
+			type.rainbow: get_node("addedscore").showscore(addscore * Global.addScoreMultiplier, Color.HOT_PINK)
+			type.gold: get_node("addedscore").showscore(addscore * Global.addScoreMultiplier, Color.GOLD)
+			type.space: get_node("addedscore").showscore(addscore * Global.addScoreMultiplier, Color.REBECCA_PURPLE)
+			type.toxic: get_node("addedscore").showscore(addscore * Global.addScoreMultiplier, Color.DARK_GREEN)
 	
 	if currentType == type.bomb: bombdestroy()
 	

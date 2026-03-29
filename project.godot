@@ -11,11 +11,13 @@ config_version=5
 [application]
 
 config/name="bubbles click"
+config/version="0.1"
 run/main_scene="uid://dr2h16in47f06"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.078529, 0.266494, 0.307919, 1)
 boot_splash/fullsize=false
 boot_splash/image="uid://bvkmpceob2s1t"
-config/icon="res://icon.svg"
+config/icon="uid://bvkmpceob2s1t"
 
 [autoload]
 
@@ -31,7 +33,7 @@ mouse_cursor/custom_image="uid://dt8rls8yr017o"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-yandex-games-sdk/plugin.cfg", "res://addons/minimize_html_build/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-yandex-games-sdk/plugin.cfg")
 
 [importer_defaults]
 

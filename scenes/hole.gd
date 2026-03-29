@@ -12,8 +12,8 @@ func _ready() -> void:
 		explosion.emitting = true
 	else:
 		explosion.queue_free()
-	
 	sprite.rotation = rad_to_deg(randf_range(-180, 180))
+	
 	timer.timeout.connect(
 		func():
 			if Global.enableAnimation:
@@ -26,6 +26,8 @@ func _ready() -> void:
 			queue_free()
 	)
 	
-	if !enableExplosion: return
-	
-	
+	if Global.enableAnimation:
+		var tween: Tween = create_tween()
+		tween.set_ease(Tween.EASE_OUT)
+		tween.set_trans(Tween.TRANS_SPRING)
+		tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 1.0)

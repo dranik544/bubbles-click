@@ -7,6 +7,8 @@ extends Node2D
 @export var maxTime: float = 3.0
 @export var chance: int = 200
 
+@export var addBomb: bool = true
+
 @export var spawnInPoint: bool = false
 
 
@@ -44,9 +46,12 @@ func timeout():
 		
 		16,17,18,19,20: newbubble.currentType = newbubble.type.space
 		
-		21,22,23,24,25,26,27,28,29,30: newbubble.currentType = newbubble.type.toxic
+		21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37:
+			var randomtoxic: int = randi_range(0, Global.chanceSpawnToxicBubble)
+			if randomtoxic == 0:
+				newbubble.currentType = newbubble.type.toxic
 		
-		31,32,33,34,35,36,37:
+		38,39,40,41,42,43,44,45,46:
 			for i in range(8):
 				var morebubble = bubble1.instantiate()
 				var offset = Vector2(randf_range(-64, 64), randf_range(-64, 64))
@@ -55,10 +60,10 @@ func timeout():
 				add_child(morebubble)
 			return
 		
-		38,39,40,41,42,43,44,45,46: newbubble.currentType = newbubble.type.bomb
+		47,48,49,50,51,52,53: if addBomb: newbubble.currentType = newbubble.type.bomb
 		
 		_: newbubble.currentType = newbubble.type.default
 	
 	get_tree().current_scene.add_child(newbubble)
 	
-	spawntimer.wait_time = randf_range(minTime, maxTime)
+	spawntimer.wait_time = randf_range(minTime / Global.addChanceSpawnMultiplier, maxTime / Global.addChanceSpawnMultiplier)

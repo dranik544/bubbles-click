@@ -2,17 +2,19 @@ extends Node2D
 
 
 func _ready() -> void:
-	if Global.disableAllYandexServices: return
+	if !Global.disableAllYandexServices:
+		YandexSDK.gameplay_started()
 	
-	YandexSDK.gameplay_started()
-	
+	if Global.disableAutoPause: return
 	get_viewport().focus_entered.connect(
 		func():
 			get_tree().paused = true
-			YandexSDK.gameplay_started()
+			if !Global.disableAllYandexServices:
+				YandexSDK.gameplay_started()
 	)
 	get_viewport().focus_exited.connect(
 		func():
 			get_tree().paused = false
-			YandexSDK.gameplay_stopped()
+			if !Global.disableAllYandexServices:
+				YandexSDK.gameplay_stopped()
 	)

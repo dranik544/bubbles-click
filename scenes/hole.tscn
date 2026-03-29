@@ -52,7 +52,8 @@ screensize = Vector2(80, 80)
 spawntimer = NodePath("spawntimer")
 minTime = 5.0
 maxTime = 8.0
-chance = 100
+chance = 125
+addBomb = false
 spawnInPoint = true
 
 [node name="spawntimer" type="Timer" parent="bubblespawner"]
