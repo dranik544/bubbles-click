@@ -44,8 +44,7 @@ func _ready() -> void:
 	
 	match currentType:
 		type.default:
-			sprite.texture = load("res://sprites/default/bubble1.png")
-			shadow.texture = load("res://sprites/default/bubble1.png")
+			pass
 		type.rainbow:
 			if Global.enableAnimation:
 				rainbowParticles.visible = true
@@ -140,7 +139,6 @@ func destroy():
 		audio.play()
 		sprite.visible = false
 		shadow.visible = false
-		light.visible = false
 		
 		if get_tree(): await get_tree().create_timer(0.3).timeout
 	

@@ -6,6 +6,7 @@ func showscore(score: int, colortext: Color = Color.WHITE):
 	
 	text = str(score)
 	modulate = colortext
+	pivot_offset = size / 2
 	
 	visible = true
 	

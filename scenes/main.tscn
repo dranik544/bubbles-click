@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://uncqy5kpooiv"]
+[gd_scene load_steps=32 format=3 uid="uid://uncqy5kpooiv"]
 
 [ext_resource type="Texture2D" uid="uid://b4ysg74k5vjj8" path="res://sprites/default/bg1.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://clvhtv6tlr5h8" path="res://scenes/main.gd" id="1_tbgi4"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://dqr3mlq6ols51" path="res://scenes/upgradebutton.gd" id="17_jscy8"]
 [ext_resource type="Texture2D" uid="uid://bwrgx3tqhtmot" path="res://sprites/upgrades/upgrade2.png" id="17_yc10j"]
 [ext_resource type="Texture2D" uid="uid://rqit8pq5xee4" path="res://sprites/upgrades/upgrade3.png" id="18_pm3ni"]
+[ext_resource type="Texture2D" uid="uid://dtd4felxrfydl" path="res://sprites/upgrades/upgrade4.png" id="21_2wyq8"]
 [ext_resource type="Script" uid="uid://bqqfl22n3l551" path="res://scenes/adwarning.gd" id="21_og1vs"]
 
 [sub_resource type="Gradient" id="Gradient_o6xl0"]
@@ -107,7 +108,7 @@ texture = ExtResource("6_jkv2x")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="levelbar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("label")]
+[node name="levelbar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("label", "label2")]
 custom_minimum_size = Vector2(0, 32)
 anchors_preset = 10
 anchor_right = 1.0
@@ -123,21 +124,39 @@ theme_override_fonts/font = ExtResource("6_tefeu")
 show_percentage = false
 script = ExtResource("9_0ld40")
 label = NodePath("Label")
+label2 = NodePath("Label2")
 
 [node name="Label" type="Label" parent="CanvasLayer/levelbar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_right = -5.0
+offset_left = 10.0
+offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = -2
 theme_override_constants/shadow_offset_y = 2
 theme_override_fonts/font = ExtResource("6_tefeu")
-text = "0 LVL"
+text = "0 Уровень"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/levelbar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -2
+theme_override_constants/shadow_offset_y = 2
+theme_override_fonts/font = ExtResource("6_tefeu")
+text = "0 / N"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="counter" type="Label" parent="CanvasLayer"]
@@ -189,7 +208,7 @@ flat = true
 script = ExtResource("14_dp3eg")
 bg = NodePath("../../bg")
 
-[node name="upgradeselect" type="Control" parent="CanvasLayer"]
+[node name="upgradeselect" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "bg", "vbox")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -199,6 +218,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_y6deb")
+label = NodePath("Label")
+bg = NodePath("bg")
+vbox = NodePath("vbox")
 
 [node name="bg" type="ColorRect" parent="CanvasLayer/upgradeselect"]
 layout_mode = 1
@@ -209,7 +231,26 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.490196)
 
+[node name="Label" type="Label" parent="CanvasLayer/upgradeselect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 32
+text = "Вы достигли нового уровня!
+Выберите улучшение..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="vbox" type="VBoxContainer" parent="CanvasLayer/upgradeselect"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -271,6 +312,23 @@ script = ExtResource("17_jscy8")
 currentUpgrade = 2
 upgradeSelectNode = NodePath("../..")
 
+[node name="button4" type="Button" parent="CanvasLayer/upgradeselect/vbox" node_paths=PackedStringArray("upgradeSelectNode")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_tefeu")
+theme_override_font_sizes/font_size = 24
+text = "Увеличить шанс появления редких пузырей"
+icon = ExtResource("21_2wyq8")
+autowrap_mode = 3
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("17_jscy8")
+currentUpgrade = 3
+upgradeSelectNode = NodePath("../..")
+
 [node name="skipbutton" type="Button" parent="CanvasLayer/upgradeselect/vbox" node_paths=PackedStringArray("upgradeSelectNode")]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
@@ -322,7 +380,7 @@ vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="adtimer" type="Timer" parent="CanvasLayer/adwarning"]
-wait_time = 8.0
+wait_time = 120.0
 autostart = true
 ignore_time_scale = true
 

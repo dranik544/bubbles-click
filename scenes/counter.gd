@@ -4,6 +4,7 @@ var tween: Tween
 
 
 func _ready() -> void:
+	pivot_offset = size / 2
 	Global.updatescore.connect(updatecounter)
 	updatecounter()
 
@@ -15,7 +16,7 @@ func updatecounter():
 		tween = create_tween()
 		tween.set_ease(Tween.EASE_IN)
 		tween.set_trans(Tween.TRANS_EXPO)
-		tween.tween_property(self, "scale", Vector2(1.5, 1.5), 0.25)
+		tween.tween_property(self, "scale", Vector2(1.8, 1.8), 0.25)
 		
 		await tween.finished
 		

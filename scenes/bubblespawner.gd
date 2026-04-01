@@ -3,67 +3,93 @@ extends Node2D
 @export var screensize: Vector2 = Vector2.ZERO
 @export var spawntimer: Timer
 @export var bubble1: PackedScene = preload("res://scenes/bubble.tscn")
-@export var minTime: float = 1.0
-@export var maxTime: float = 3.0
-@export var chance: int = 200
-
-@export var addBomb: bool = true
-
+@export var minTime: float = 3.0
+@export var maxTime: float = 6.0
 @export var spawnInPoint: bool = false
 
+@export var wDefault: int = 100
+@export var wRainbow: int = 30
+@export var wGold: int = 15
+@export var wSpace: int = 10
+@export var wToxic: int = 20
+@export var wCluster: int = 10
+@export var wBomb: int = 20
+
+var BubbleType = preload("res://scenes/bubble.gd").type
 
 func _ready() -> void:
 	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
-	
-	if !spawnInPoint:
-		if screensize == Vector2.ZERO: screensize = get_viewport().size
+	if !spawnInPoint and screensize == Vector2.ZERO:
+		screensize = get_viewport().size
 	spawntimer.wait_time = randf_range(minTime, maxTime)
 	spawntimer.timeout.connect(timeout)
 
-func timeout():
-	if bubble1 == null: return
+func timeout() -> void:
+	if not bubble1: return
 	
-	var newbubble: RigidBody2D = bubble1.instantiate()
-	
-	if spawnInPoint:
-		newbubble.global_position = global_position + Vector2(randf_range(-25, 25), randf_range(-25, 25))
-	else:
-		newbubble.global_position = Vector2(
+	var pos: Vector2
+	if !spawnInPoint:
+		pos = Vector2(
 			randf_range(128.0, screensize.x - 128.0),
 			screensize.y + 128.0
 		)
+	else:
+		pos = global_position + Vector2(randf_range(-25, 25), randf_range(-25, 25))
 	
-	var bubbletype = randi() % chance
-	match bubbletype:
-		1,2,3,4,5,6,7,8,9,10: newbubble.currentType = newbubble.type.rainbow
-		
-		11,12,13,14,15: newbubble.currentType = newbubble.type.gold
-		
-		16,17,18,19,20: newbubble.currentType = newbubble.type.space
-		
-		21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37:
-			var randomtoxic: int = randi_range(0, Global.chanceSpawnToxicBubble)
-			if randomtoxic == 0:
-				newbubble.currentType = newbubble.type.toxic
-		
-		38,39,40,41,42,43,44,45,46:
-			for i in range(8):
-				var morebubble = bubble1.instantiate()
-				var offset = Vector2(randf_range(-64, 64), randf_range(-64, 64))
-				morebubble.global_position = newbubble.global_position + offset
-				morebubble.currentType = morebubble.type.default
-				add_child(morebubble)
-			return
-		
-		47,48,49,50,51,52,53: if addBomb: newbubble.currentType = newbubble.type.bomb
-		
-		_: newbubble.currentType = newbubble.type.default
 	
-	get_tree().current_scene.add_child(newbubble)
+	var chosen = picktype()
+	if chosen != "cluster":
+		var bubble = bubble1.instantiate()
+		bubble.global_position = pos
+		bubble.currentType = getenum(chosen)
+		get_tree().current_scene.add_child(bubble)
+	else:
+		for i in 8:
+			var bubble = bubble1.instantiate()
+			bubble.global_position = pos + Vector2(randf_range(-64, 64), randf_range(-64, 64))
+			bubble.currentType = BubbleType.default
+			get_tree().current_scene.add_child(bubble)
 	
-	spawntimer.wait_time = randf_range(minTime / Global.addChanceSpawnMultiplier, maxTime / Global.addChanceSpawnMultiplier)
+	spawntimer.wait_time = randf_range(
+		minTime / Global.addChanceSpawnMultiplier,
+		maxTime / Global.addChanceSpawnMultiplier
+	)
+
+func picktype() -> String:
+	wToxic /= Global.chanceSpawnToxicBubble
+	wGold *= Global.chanceSpawnRareBubbles
+	wRainbow *= Global.chanceSpawnRareBubbles
+	wSpace *= Global.chanceSpawnRareBubbles
+	
+	var total = wDefault + wRainbow + wGold + wSpace + wToxic + wCluster + wBomb
+	var r = randi() % total
+	
+	var acc = wDefault
+	
+	if r < acc: return "default"
+	
+	acc += wRainbow
+	if r < acc: return "rainbow"
+	
+	acc += wGold
+	if r < acc: return "gold"
+	
+	acc += wSpace
+	if r < acc: return "space"
+	
+	acc += wToxic
+	if r < acc: return "toxic"
+	
+	acc += wCluster
+	if r < acc: return "cluster"
+	
+	return "bomb"
+
+func getenum(s: String):
+	match s:
+		"rainbow": return BubbleType.rainbow
+		"gold": return BubbleType.gold
+		"space": return BubbleType.space
+		"toxic": return BubbleType.toxic
+		"bomb": return BubbleType.bomb
+		_: return BubbleType.default

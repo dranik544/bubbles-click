@@ -3,23 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1nyolro5g0yw"
-path.s3tc="res://.godot/imported/musicicon1.png-139e368356424ae88994eee96d795370.s3tc.ctex"
-path.etc2="res://.godot/imported/musicicon1.png-139e368356424ae88994eee96d795370.etc2.ctex"
+path="res://.godot/imported/musicicon1.png-139e368356424ae88994eee96d795370.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://sprites/musicicon1.png"
-dest_files=["res://.godot/imported/musicicon1.png-139e368356424ae88994eee96d795370.s3tc.ctex", "res://.godot/imported/musicicon1.png-139e368356424ae88994eee96d795370.etc2.ctex"]
+dest_files=["res://.godot/imported/musicicon1.png-139e368356424ae88994eee96d795370.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.6
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

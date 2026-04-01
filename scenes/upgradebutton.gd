@@ -1,9 +1,9 @@
 extends Button
 
 @export var isSkipButton: bool = false
-enum upgrade {addMoreBubbles, addMoreScoreFromBubble, disableSomeToxicBubbles}
+enum upgrade {addMoreBubbles, addMoreScoreFromBubble, disableSomeToxicBubbles, addMoreRareBubbles}
 @export var currentUpgrade: upgrade
-@export var chanceBeDeleted: int = 2
+@export var chanceBeDeleted: int = 3
 @export var upgradeSelectNode: Control
 
 
@@ -20,7 +20,9 @@ func _ready() -> void:
 				upgrade.addMoreScoreFromBubble:
 					Global.addScoreMultiplier *= 1.2
 				upgrade.disableSomeToxicBubbles:
-					Global.chanceSpawnToxicBubble += 1
+					Global.chanceSpawnToxicBubble *= 1.2
+				upgrade.addMoreRareBubbles:
+					Global.chanceSpawnRareBubbles *= 1.2
 	)
 	
 	Global.updatelevel.connect(updatelevel)

@@ -3,23 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwpost2rxn1c1"
-path.s3tc="res://.godot/imported/bg7.png-7c1206e8e5cbeceaab8b2477f02ea047.s3tc.ctex"
-path.etc2="res://.godot/imported/bg7.png-7c1206e8e5cbeceaab8b2477f02ea047.etc2.ctex"
+path="res://.godot/imported/bg7.png-7c1206e8e5cbeceaab8b2477f02ea047.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://sprites/default/bg7.png"
-dest_files=["res://.godot/imported/bg7.png-7c1206e8e5cbeceaab8b2477f02ea047.s3tc.ctex", "res://.godot/imported/bg7.png-7c1206e8e5cbeceaab8b2477f02ea047.etc2.ctex"]
+dest_files=["res://.godot/imported/bg7.png-7c1206e8e5cbeceaab8b2477f02ea047.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.8
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

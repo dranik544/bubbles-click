@@ -10,12 +10,13 @@ var enableMusic: bool = true
 
 var currentLevel: int = 0
 var currentScorelevel: int = 0
-var neededScoreLevel: int = 10
+var neededScoreLevel: int = 5
 var currentUpgrades: Array = []
 
 var addScoreMultiplier: float = 1.0
 var addChanceSpawnMultiplier: float = 1.0
-var chanceSpawnToxicBubble: int = 0
+var chanceSpawnToxicBubble: float = 1.0
+var chanceSpawnRareBubbles: float = 1.0
 
 signal updatescore
 signal updatemusic
@@ -31,7 +32,7 @@ func addscore(addscore: int):
 	if currentScorelevel >= neededScoreLevel:
 		currentLevel += 1
 		currentScorelevel = 0
-		neededScoreLevel *= 1.5
+		neededScoreLevel *= 2.0
 		
 		updatelevel.emit()
 	
