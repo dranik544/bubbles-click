@@ -7,6 +7,11 @@ extends Control
 
 func _ready() -> void:
 	if label: label.pivot_offset = label.size / 2
+	get_viewport().size_changed.connect(
+		func():
+			if label: label.pivot_offset = label.size / 2
+	)
+	
 	
 	Global.updatelevel.connect(
 		func():

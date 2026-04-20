@@ -3,11 +3,12 @@ extends Node
 var disableAllYandexServices: bool = true
 
 var disableAutoPause: bool = true
-var score: int = 0
 var enableAnimation: bool = true
 var enableSound: bool = true
 var enableMusic: bool = true
+var nowUpgradeSelect: bool = false
 
+var score: int = 0
 var currentLevel: int = 0
 var currentScorelevel: int = 0
 var neededScoreLevel: int = 5

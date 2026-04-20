@@ -10,8 +10,11 @@ func _ready() -> void:
 		func():
 			show()
 			get_tree().paused = true
-			get_tree().create_timer(3.0, true, false, true).timeout
-			YandexSDK.show_interstitial_ad()
-			get_tree().paused = false
+			
+			await get_tree().create_timer(3.0).timeout
+			
+			await YandexFunc.show_interstitial_ad()
+			
+			if !Global.nowUpgradeSelect: get_tree().paused = false
 			hide()
 	)

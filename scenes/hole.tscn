@@ -53,11 +53,7 @@ spawntimer = NodePath("spawntimer")
 minTime = 6.0
 maxTime = 12.0
 spawnInPoint = true
-wRainbow = 15
-wGold = 7
-wSpace = 5
-wToxic = 10
-wCluster = 5
+wDefault = 150
 wBomb = 0
 
 [node name="spawntimer" type="Timer" parent="bubblespawner"]

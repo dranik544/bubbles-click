@@ -9,11 +9,9 @@ extends Node2D
 
 func _ready() -> void:
 	if !Global.disableAllYandexServices:
-		YandexSDK.init_game()
-		await get_tree().process_frame
-		await get_tree().process_frame
-		await get_tree().process_frame
-		JavaScriptBridge.eval("if (typeof GameReady !== 'undefined') GameReady(); else console.warn('GameReady not found');")
+		YandexFunc.init_game()
+		for i in 5: await get_tree().process_frame
+		YandexFunc.game_ready()
 	
 	get_node("CanvasLayer/TextureRect").texture = load("res://sprites/default/bg1.png")
 	

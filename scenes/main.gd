@@ -3,18 +3,17 @@ extends Node2D
 
 func _ready() -> void:
 	if !Global.disableAllYandexServices:
-		YandexSDK.gameplay_started()
+		if !YandexFunc.is_game_initialized:
+			YandexFunc.init_game()
+			for i in 5: await get_tree().process_frame
+			YandexFunc.game_ready()
 	
 	if Global.disableAutoPause: return
 	get_viewport().focus_entered.connect(
 		func():
 			get_tree().paused = true
-			if !Global.disableAllYandexServices:
-				YandexSDK.gameplay_started()
 	)
 	get_viewport().focus_exited.connect(
 		func():
 			get_tree().paused = false
-			if !Global.disableAllYandexServices:
-				YandexSDK.gameplay_stopped()
 	)

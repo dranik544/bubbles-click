@@ -23,6 +23,7 @@ config/icon="uid://bvkmpceob2s1t"
 
 YandexSDK="*res://addons/godot-yandex-games-sdk/yandex_sdk.gd"
 Global="*res://global.gd"
+YandexFunc="*res://YandexFunc.gd"
 
 [display]
 

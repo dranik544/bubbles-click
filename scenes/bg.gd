@@ -11,3 +11,8 @@ func _ready() -> void:
 	
 	size = get_viewport().size
 	position = Vector2.ZERO
+	
+	get_viewport().size_changed.connect(
+		func():
+			size = get_viewport().size
+	)

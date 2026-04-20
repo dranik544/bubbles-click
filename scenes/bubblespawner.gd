@@ -8,17 +8,22 @@ extends Node2D
 @export var spawnInPoint: bool = false
 
 @export var wDefault: int = 100
-@export var wRainbow: int = 30
-@export var wGold: int = 15
-@export var wSpace: int = 10
-@export var wToxic: int = 20
-@export var wCluster: int = 10
+@export var wRainbow: int = 15
+@export var wGold: int = 5
+@export var wSpace: int = 2
+@export var wToxic: int = 35
+@export var wCluster: int = 30
 @export var wBomb: int = 20
 
 var BubbleType = preload("res://scenes/bubble.gd").type
 
 func _ready() -> void:
 	await get_tree().process_frame
+	
+	get_viewport().size_changed.connect(
+		func():
+			if !spawnInPoint: screensize = get_viewport().size
+	)
 	if !spawnInPoint and screensize == Vector2.ZERO:
 		screensize = get_viewport().size
 	spawntimer.wait_time = randf_range(minTime, maxTime)
